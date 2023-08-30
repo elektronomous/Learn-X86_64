@@ -1,0 +1,25 @@
+The processor keeps track of the next instruction to be executed by storing the
+address of the next instruction in rip. A safer way of changing the value in rip
+is by using jump instructions.
+
+Here is the layout of rflags , the flag register. After executing an instruction, 
+a program can check whether a certain flag is set (e.g., ZF=1) and
+then act accordingly
+._______________________________________________________________________________.
+|   Name        | Symbol        | Bit   | Content                               |
+|===============|===============|=======|=======================================|
+|   Carry       | CF            | 0     | Previous instruction had a carry      |
+|   Parity      | PF            | 2     | Last byte has even number of 1s       |
+|   Adjust      | AF            | 4     | BCD operations                        |
+|   Zero        | ZF            | 6     | Previous instruction resulted a zero  |
+|   Sign        | SF            | 8     | Previous instruction resulted in most |
+|               |               |       | significant bit equal to 1            |
+|   Direction   | DF            | 10    | Direction of string operations        |
+|               |               |       | (increment or decrement)Overflow OF   |
+|               |               |       | 11 Previous instruction resulted in   |
+|               |               |       | overflow                              |
+\===============|===============|=======|=======================================/
+
+These registers are used for floating-point calculations and SIMD. We will
+use the xmm and corresponding ymm registers extensively later, starting with
+the floating-point instructions

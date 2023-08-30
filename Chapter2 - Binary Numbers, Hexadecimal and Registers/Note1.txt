@@ -1,0 +1,64 @@
+bits are the smallest piece of information; a bit can have
+a value of 1 or 0
+
+registers, data storage areas that assist the processor in
+executing logical and arithmetic instructions.
+
+Signed integers have
+the leftmost bit set to 1 if negative and 0 if positive. Unsigned integers are 0
+or positive; there is no room for a sign bit. 
+
+negative integers are used in what is called a two’s complement representation
+Here is an example using 16-bit numbers, instead of 64-bit numbers
+    decimal number      =                    17
+    binary number       =   0000 0000 0001 0001
+    hexadecimal number  =     0   0    1    1
+
+    decimal number      =                   -17
+    abs(binary number)  =   0000 0000 0001 0001
+    complement          =   1111 1111 1110 1110
+    add 1               =   1111 1111 1110 1111
+    hexadecimal number  =     f    f    e    f
+
+    0xffef in hexa
+    17 in decimal
+
+Registers are storage locations, used by the CPU to store data, instructions, or
+memory addresses
+
+CPU can access registers much
+faster than it can access memory.
+
+._______________________________________________________________________________.
+|64-bit     | 32-bit    | 16-bit    | low 8-bit | hight 8-bit   | comment       |
+|===========|===========|===========|===========|===============|===============|
+| rax       | eax       | ax        | al        | ah            |               |
+| rbx       | ebx       | bx        | bl        | bh            |               |
+| rcx       | ecx       | cx        | cl        | ch            |               |
+| rdx       | edx       | dx        | dl        | dh            |               |
+| rsi       | esi       | si        | sil       | -             |               |
+| rdi       | edi       | di        | dil       | -             |               |
+| rbp       | ebp       | bp        | bpl       | -             | Base pointer  |
+| rsp       | esp       | sp        | spl       | -             | Stack pointer |
+| r8        | r8d       | r8w       | r8b       | -             |               |
+| r9        | r9d       | r9w       | r9b       | -             |               |
+| r10       | r10d      | r10w      | r10b      | -             |               |
+| r11       | r11d      | r11w      | r11b      | -             |               |
+| r12       | r12d      | r12w      | r12b      | -             |               |
+| r13       | r13d      | r13w      | r13b      | -             |               |
+| r14       | r14d      | r14w      | r14b      | -             |               |
+| r15       | r15d      | r15w      | r15b      | -             |               |
+\===============================================================================/
+
+Although rbp and rsp are called general-purpose registers, they should
+be handled with care, as they are used by the processor during the program
+execution. 
+
+A 64-bit register contains a set of 64 bits, 0s and/or 1s, that is, 8 bytes.
+When we put 60 in rax in our hello, world program, rax contained the
+following:
+
+    00000000 00000000 00000000 00000000 00000000
+    00000000 00000000 00111100
+
+Remember, the “lower” bits are always the rightmost bits
