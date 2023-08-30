@@ -8,10 +8,10 @@ section .text
 
 main:
     mov     rax, 1      ;   1 = syscall to write
-    mov     rdi, 0      ;   0 = write to standard output
-    mov     rdx, 12     ;   msg length
-    mov     rsi, msg    ;   msg to be display
-    syscall
+    mov     rdi, 1      ;   1 = to stdout
+    mov     rsi, msg    ;   string to display in rsi
+    mov     rdx, 12     ;   the length of the string, without 0
+    syscall             ;   display the string
 
     ; exit
     mov    rax, 60     ; syscall for exit

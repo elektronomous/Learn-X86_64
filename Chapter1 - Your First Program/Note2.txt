@@ -1,0 +1,44 @@
+The acronym bss stands for Block Started by Symbol, In this section go 
+the uninitialized variables. Space for uninitialized variables is 
+declared in this section, in the following format:
+
+    <variable name> <type>      <number>
+
+
+resb 8 bits Byte
+resw 16 bits Word
+resd 32 bits Double word
+resq 64 bits Quadword
+
+For example, the following declares space for an array of 20 double
+words:
+    dArray resd     20
+
+The variables in section .bss do not contain any values; the values
+will be assigned later at execution time.
+
+section .txt is where all the action is. This section contains the program
+code and starts with the following:
+
+    global main
+    main:
+
+The instruction mov can be used as follows:
+ = mov register, immediate value
+ = mov register, memory
+ = mov memory, register
+ = illegal: mov memory, memory
+
+in our code, the output destination for writing is stored into the register
+rdi, and 1 means standard output (in this case, output to your screen)
+
+The address of the string to be displayed is put into register rsi.
+
+In register rdx , we place the message length. Count the characters of
+hello, world. Do not count the quotes of the string or the terminating
+0. If you count the terminating 0, the program will try to display a NULL
+byte, which is a bit senseless.
+
+Then the system call, syscall , is executed, and the string, msg, will 
+bedisplayed on the standard output. A syscall is a call to functionality
+provided by the operating system

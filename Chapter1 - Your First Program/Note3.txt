@@ -1,0 +1,45 @@
+System calls are used to ask the operating system to do specific actions.
+Every operating system has a different list of system call parameters, and the
+system calls for Linux are different from Windows or macOS. We use the
+Linux system calls for x64 in this book; you can find more details at
+http://blog.rchapman.org/posts/Linux_System_Call_Tab
+
+
+     1                                  ; hello.asm
+     2                                  bits 64         ;; tell the compiler this mode 64-bit
+     3                                  section .data
+     4 00000000 48656C6C6F2C20576F-         msg db      "Hello, World", 0
+     4 00000009 726C6400           
+     5                                  section .bss
+     6                                  section .text
+     7                                      global main
+     8                                  
+     9                                  main:
+    10 00000000 B801000000                  mov     rax, 1      ;   1 = syscall to write
+    11 00000005 BF00000000                  mov     rdi, 0      ;   0 = write to standard output
+    12 0000000A BA0C000000                  mov     rdx, 12     ;   msg length
+    13 0000000F 48BE-                       mov     rsi, msg    ;   msg to be display
+    13 00000011 [0000000000000000] 
+    14 00000019 0F05                        syscall
+    15                                  
+    16                                      ; exit
+    17 0000001B B83C000000                  mov    rax, 60     ; syscall for exit
+    18 00000020 4831FF                      xor    rdi, rdi    ; exit code 0
+    19 00000023 0F05                        syscall
+        |         |
+        |         |
+        |         |
+      Memory     Machine
+      Address    Code
+
+B8 01 00 00 00. The double zeros are there for padding
+and memory alignment.
+
+Memory alignment is a feature used by assemblers
+and compilers to optimize code. 
+
+The memory
+addresses have eight digits (that is, 8 bytes); each byte has 8 bits. So, the
+addresses have 64 bits; indeed, we are using a 64-bit assembler. Look at how
+msg is referenced. Because the memory location of msg is not known yet, it
+is referred to as [0000000000000000].

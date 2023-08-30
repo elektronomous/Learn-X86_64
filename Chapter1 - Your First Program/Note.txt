@@ -1,0 +1,43 @@
+You read the makefile from the bottom up to see what it is doing. Here
+is a simplified explanation: the make utility works with a dependency tree. It
+notes that hello depends on hello.o. It then sees that hello.o depends
+on hello.asm and that hello.asm depends on nothing else. make
+compares the last modification dates of hello.asm with hello.o, and if
+the date from hello.asm is more recent, make executes the line after
+hello.o, which is hello.asm. Then make restarts reading the
+makefile and finds that the modification date of hello.o is more recent
+than the date from hello. So, it executes the line after hello, which is
+hello.o.
+
+The recent GCC linker and compiler generate position-independent
+executables (PIEs) by default. This is to prevent hackers from investigating
+how memory is used by a program and eventually interfering with program
+execution. 
+
+In section .data , initialized data is declared and defined, in the
+following format:
+    <variable name> <type>      <value>
+
+section .data can also contain constants, which are values that
+cannot be changed in the program. They are declared in the following format:
+    <variable name> equ         <value>
+
+When a variable is included in section .data, memory is allocated
+for that variable when the source code is assembled and linked to an
+executable. Variable names are symbolic names, and references to memory
+locations and a variable can take one or more memory locations. The variable
+name refers to the start address of the variable in memory.
+
+db => 8 bits => Byte
+dw => 16 bits => Word
+dd => 32 bits => Double word
+dq => 64 bits => Quadword
+
+In the example program, section .data contains one variable, msg,
+which is a symbolic name pointing to the memory address of ‘h’, which is
+the first byte of the string “hello, world”,0. So, msg points to the letter
+‘h’, msg+1 points to the letter ‘e’, and so on.
+
+The terminating 0
+we are referring to is not an ASCII 0; it is a numeric zero, and the memory
+place at the 0 contains eight 0 bits.
