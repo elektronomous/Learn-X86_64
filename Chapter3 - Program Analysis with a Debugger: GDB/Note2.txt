@@ -35,3 +35,73 @@ we will put a break in the program, pausing the execution and
 allowing us to examine a number or things
     (gdb) break main
     Breakpoint 1 at 0x401110: file hello.asm, line 10
+
+    (gdb) run
+    Breakpoint 1, main () at hello.asm:10
+    10          mov     rax, 1      ;   1 = syscall to write    
+
+The debugger stops at the break and shows the next instruction that will
+be executed. That is, mov rax,1 is not executed yet.
+
+    (gdb) info registers
+    rax            0x401110            4198672
+    rbx            0x0                 0
+    rcx            0x403e58            4210264
+    rdx            0x7ffffffee0b8      140737488281784
+    rsi            0x7ffffffee0a8      140737488281768
+    rdi            0x1                 1
+    rbp            0x1                 0x1
+    rsp            0x7ffffffedf98      0x7ffffffedf98
+    r8             0x7fffff78af10      140737479487248
+    r9             0x7fffff7b6040      140737479663680
+    r10            0x7fffff7b0908      140737479641352
+    r11            0x7fffff7cb680      140737479751296
+    r12            0x7ffffffee0a8      140737488281768
+    r13            0x401110            4198672
+    r14            0x403e58            4210264
+    r15            0x7fffff7ea040      140737479876672
+    rip            0x401110            0x401110 <main>
+    eflags         0x246               [ PF ZF IF ]
+    cs             0x33                51
+    ss             0x2b                43
+    ds             0x0                 0
+    es             0x0                 0
+    fs             0x0                 0
+    gs             0x0                 0
+
+Register rip has the value 0x401110, which is the memory address of the next
+instruction to execute. Check your disassemble listing; 0x401110 (in our case)
+points to the first instruction, mov rax,1. GDB stops just before that instruction
+and waits for your commands. *** It is important to remember that the instruction pointed
+to by rip is not yet executed. ***
+
+    (gdb) step  
+    11          mov     rdi, 1      ;   1 = to stdout
+    (gdb) i r  ==================================================> info register same command
+    rax            0x1                 1
+    rbx            0x0                 0
+    rcx            0x403e58            4210264
+    rdx            0x7ffffffee0b8      140737488281784
+    rsi            0x7ffffffee0a8      140737488281768
+    rdi            0x1                 1
+    rbp            0x1                 0x1
+    rsp            0x7ffffffedf98      0x7ffffffedf98
+    r8             0x7fffff78af10      140737479487248
+    r9             0x7fffff7b6040      140737479663680
+    r10            0x7fffff7b0908      140737479641352
+    r11            0x7fffff7cb680      140737479751296
+    r12            0x7ffffffee0a8      140737488281768
+    r13            0x401110            4198672
+    r14            0x403e58            4210264
+    r15            0x7fffff7ea040      140737479876672
+    rip            0x401115            0x401115 <main+5>
+    eflags         0x246               [ PF ZF IF ]
+    cs             0x33                51
+    ss             0x2b                43
+    ds             0x0                 0
+    es             0x0                 0
+    fs             0x0                 0
+    gs             0x0                 0
+
+rax contains now 0x1, and rip contains the address of the next
+instruction to execute.

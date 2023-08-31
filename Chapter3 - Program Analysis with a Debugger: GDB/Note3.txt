@@ -1,0 +1,18 @@
+Some Additional GDB Commands
+    (gdb) break or b: Set a breakpoint as we have done before.
+    (gdb) disable breakpoint number
+    (gdb) enable breakpoint number
+    (gdb) delete breakpoint number
+    (gdb) continue or c: Continue execution until next breakpoint.
+    (gdb) step or s: Step into the current line, eventually jumping into the called function.
+    (gdb) next or n: Step over the current line and stop at the next line.
+    (gdb) help or h: Show help.
+    (gdb) tui enable: Enable a simple text user interface; to disable, use tui disable.
+    (gdb) print or p: Print the value of a variable, register, and so on.
+    Here are some examples:
+    Print rax: (gdb) p $rax.
+    Print rax in binary: (gdb) p/t $rax.
+    Print rax in hexadecimal: (gdb) p/x $rax.
+
+One important remark about GDB: to properly use it, you must insert a
+function prologue and a function epilogue in your code.
