@@ -1,0 +1,46 @@
+If you type the following:
+    > list
+GDB will show a number of lines of your code.
+
+But first we will change the disassembly flavor; do this only if you had
+the % signs in the previous exercise. Load the executable hello into GDB if
+it is not already there.
+Type the following:
+    > set disassembly-flavor intel
+
+At the (gdb) prompt, type the following:
+    > disassemble main
+GDB returns your source code, more or less
+
+    (gdb) disassemble main
+    Dump of assembler code for function main:
+    0x0000000000401110 <+0>:     mov    eax,0x1
+    0x0000000000401115 <+5>:     mov    edi,0x1
+    0x000000000040111a <+10>:    movabs rsi,0x404028
+    0x0000000000401124 <+20>:    mov    edx,0xc
+    0x0000000000401129 <+25>:    syscall
+    0x000000000040112b <+27>:    mov    eax,0x3c
+    0x0000000000401130 <+32>:    xor    rdi,rdi
+    0x0000000000401133 <+35>:    syscall
+            |
+            |
+            |
+        Memory Address
+
+<+5> tells us the first instruction, mov eax, 01, needs five bytes of memory.
+
+But wait a minute, in our source code we wrote mov rax,1. What is the deal
+with the eax?
+Well, if you look in the register table from Chapter 2, you will see that
+eax is the low 32-bit part of the rax register. The assembler is smart enough
+to figure out that a 64-bit register is far too much waste of resources for
+storing the number 1, so it uses a 32-bit register.
+
+The nop instruction means “no operation” and is inserted there by the
+assembler for memory management reasons.
+
+At the (gdb) prompt, type the following:
+    > x/s 0x601030 (or x/s your_memory_address)
+
+    (gdb) x/s 0x404028
+    0x404028 <msg>: "Hello, World"
