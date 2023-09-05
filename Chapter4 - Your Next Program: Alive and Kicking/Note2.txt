@@ -1,0 +1,22 @@
+[Note for hello.asm]
+So, we start by telling the assembler (and the linker) that we are going to
+use an external function called printf. We created a string for formatting
+how printf will display msg. The syntax for the format string is similar to
+the syntax in C; if you have any experience with C, you will certainly
+recognize the format string. %s is a placeholder for the string to be printed.
+Do not forget the function prologue and epilogue. Move the address of
+msg into rsi, and move the address of the fmtstr into rdi. Clear rax,
+which in this case means there are no floating-point numbers in the xmm
+registers to be printed. Floating-point numbers and xmm registers
+will be explained later in Chapter 11.
+
+the current gcc compiler generates position-independent executable (pie) code to
+make it more hacker-safe. One of the consequences is that we cannot simply
+use external functions anymore. Make sure the -no-pie flag is added in the makefile; 
+otherwise, the use of printf will cause an error
+
+The printf function requires that a string is terminated with 0 (NULL). If you 
+omit the 0, printf will display everything until it finds a 0.
+Terminating a string with a 0 is not a requirement in
+assembly, but it is necessary with printf, GDB, and also some SIMD
+instructions (SIMD will be covered in Chapter 26). 

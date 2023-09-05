@@ -1,0 +1,59 @@
+     1                                  ; alive3.asm
+     2                                  bits 64             ; tell the assembler that this code is 64-bit
+     3                                  
+     4                                  extern      printf  ; declare the function as external
+     5                                  
+     6                                  section .data
+     7 00000000 48656C6C6F2C20576F-         msg1    db      "Hello, World!",0
+     7 00000009 726C642100         
+     8 0000000E 416C69766520616E64-         msg2    db      "Alive and Kicking!",0
+     8 00000017 204B69636B696E6721-
+     8 00000020 00                 
+     9 00000021 65010000                    radius  dd      357
+    10 00000025 1F85EB51B81E0940            pi      dq      3.14
+    11                                  
+    12 0000002D 25730A00                    fmtstr  db      "%s",10,0       ; format for printing a string
+    13 00000031 2531660A00                  fmtflt  db      "%1f",10,0      ; format for printing a float
+    14 00000036 25640A00                    fmtint  db      "%d",10,0       ; format for printing an integer
+    15                                  section .bss
+    16                                  section .text
+    17                                      global main
+    18                                  main:
+    19 00000000 55                          push        rbp                 ; function prologue
+    20 00000001 4889E5                      mov         rbp, rsp            ; function prologue
+    21                                      
+    22                                      ; print msg1
+    23 00000004 4831C0                      xor     rax, rax        ; no floating point
+    24 00000007 48BF-                       mov     rdi, fmtstr     ; first argument for printf
+    24 00000009 [2D00000000000000] 
+    25 00000011 48BE-                       mov     rsi, msg1       ; second argument for printf
+    25 00000013 [0000000000000000] 
+    26 0000001B E8(00000000)                call    printf
+    27                                  
+    28                                      ; print msg2
+    29 00000020 4831C0                      xor     rax, rax        ; no floating point
+    30 00000023 48BF-                       mov     rdi, fmtstr     ; first argument for printf
+    30 00000025 [2D00000000000000] 
+    31 0000002D 48BE-                       mov     rsi, msg2       ; second argument for printf
+    31 0000002F [0E00000000000000] 
+    32 00000037 E8(00000000)                call    printf
+    33                                  
+    34                                      ; print radius
+    35 0000003C 4831C0                      xor     rax, rax        ; no floating point
+    36 0000003F 48BF-                       mov     rdi, fmtint     ; first argument for printf
+    36 00000041 [3600000000000000] 
+    37 00000049 488B3425[21000000]          mov     rsi, [radius]   ; pass the address of radius
+    38 00000051 E8(00000000)                call    printf
+    39                                  
+    40                                      ; print pi
+    41 00000056 B801000000                  mov     rax, 1          ; 1 xmm register used
+    42 0000005B 48BF-                       mov     rdi, fmtflt     ; first argument for printf
+    42 0000005D [3100000000000000] 
+    43 00000065 F30F7E0425-                 movq    xmm0, [pi]      ; second argument for printf
+    43 0000006A [25000000]         
+    44 0000006E E8(00000000)                call    printf
+    45                                  
+    46                                      ; exit
+    47 00000073 4889EC                      mov     rsp, rbp        ; function epilogue
+    48 00000076 5D                          pop     rbp             ; function epilogue
+    49 00000077 C3                          ret

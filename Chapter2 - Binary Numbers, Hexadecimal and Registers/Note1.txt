@@ -4,9 +4,9 @@ a value of 1 or 0
 registers, data storage areas that assist the processor in
 executing logical and arithmetic instructions.
 
-Signed integers have
-the leftmost bit set to 1 if negative and 0 if positive. Unsigned integers are 0
-or positive; there is no room for a sign bit. 
+Signed integers have the leftmost bit set to 1 if negative 
+and 0 if positive. Unsigned integers are 0 or positive; 
+there is no room for a sign bit. 
 
 negative integers are used in what is called a two’s complement representation
 Here is an example using 16-bit numbers, instead of 64-bit numbers

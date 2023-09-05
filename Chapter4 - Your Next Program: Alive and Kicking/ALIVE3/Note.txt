@@ -1,0 +1,12 @@
+Put the format string in rdi, point rsi to the item to be printed, put 0 
+into rax to indicate that no floating-point numbers are involved, and then
+call printf. For printing a floating-point number, move the floating-point
+value to be displayed in xmm0, with the instruction movq . We use one xmm
+register, so we put 1 into rax.
+
+Note the square brackets, [ ], around radius and pi.
+    mov rsi, [radius]
+This means: take the content at address radius and put it in rsi.
+
+The function printf wants a memory address for strings, but for numbers it
+expects a value, not a memory address. Keep that in mind.

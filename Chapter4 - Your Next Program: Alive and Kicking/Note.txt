@@ -1,0 +1,35 @@
+The $-msg1-1 part means this: take this memory location ($) and
+subtract the memory location of msg1. The result is the length of msg1. That
+length, -1 (minus the string-terminating zero), is stored in the constant
+msg1Len.
+
+How about the numeric values?
+    (gdb) x/dw &radius
+    0x40404b <radius>:      357
+    (gdb) x/dx &radius
+    0x40404b <radius>:      0x00000165
+    
+
+For a floating-point variable, use the following:
+    (gdb) x/fg &pi
+    0x404053 <pi>:  3.1400000000000001
+    (gdb) x/fx &pi
+    0x404053 <pi>:  0x40091eb851eb851f
+
+little-endian:
+lines(10) = 6501000000000000
+lines(11) = 1F85EB51B81E0940
+
+big-endian:
+0x00000165
+0x40091eb851eb851f
+
+Look at lines 10 and 11, where on the left you can find the hexadecimal
+representation of radius and pi. Instead of 0165, you find 6501, and
+instead of 40091EB851EB851F, you find 1F85EB51B81E0940. So, the
+bytes (1 byte is two hex numbers) are in reverse order!
+This characteristic is called endianness . The big-endian format stores
+numbers the way we are used to seeing them, with the most significant digits
+starting at the left. The little-endian format stores the least significant
+numbers starting at the left. Intel processors use little-endian, and that can be
+very confusing when looking at hexadecimal code 
