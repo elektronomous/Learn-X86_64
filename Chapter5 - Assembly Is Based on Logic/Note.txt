@@ -1,0 +1,40 @@
+NOT => Convert every 0 into 1 and every 1 into 0.
+    A       = 1 1 0 0 1 0 1 1
+    NOT A   = 0 0 1 1 0 1 0 0       <-- RESULT
+
+OR => If there is a 1 in A or B or in both, the outcome is a 1.
+    A       = 1 1 0 0 1 0 1 1
+    B       = 0 0 0 1 1 0 0 0
+    A OR B  = 1 1 0 1 1 0 1 1       <-- RESULT
+
+XOR => Exclusive OR: If there is a 1 in A or B, the outcome is a 1. If A and B are
+       both 1 or 0, the outcome is 0.
+
+            A       = 1 1 0 0 1 0 1 1
+            B       = 0 0 0 1 1 0 0 0
+            A XOR B = 1 1 0 1 0 0 1 1       <-- RESULT
+    
+    => XOR as an assembly instruction that can be used to clear a register
+    => Hence, xor rax, rax is the same is mov rax,0. But xor executes
+       faster than mov
+
+Note that if you want to change the sign of an integer, subtract it from
+zero or use the neg instruction .
+
+AND => If there is a 1 in A and in B, the outcome is a 1; otherwise, it’s 0.
+    => The AND instruction can be used as a mask to select and investigate bits.
+    => Example: select bits 3 and 6 from A
+
+            A       = 1 1 0 0 0 0 1 1
+            B       = 0 1 0 0 1 0 0 0
+            A AND B = 0 1 0 0 0 0 0 0       <-- RESULT
+       
+       Here we conclude that bit 6 is set and bit 3 is not set. I’ll talk more about
+       that later.
+    
+    => The AND instruction can also be used to round down numbers, and it is especially 
+       useful to round down addresses on a 16-byte boundary.
+
+            address = 0x42444213 = 0 1 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 1 1 (1 111 769 619)
+            mask    = 0xfffffff0 = 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 (4 294 967 280)
+            rounded = 0x42444210 = 0 1 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 (1 111 769 616)
