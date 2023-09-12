@@ -12,7 +12,7 @@ section .text
 main:
     push    rbp             ; function prologue
     mov     rbp, rsp        ; function prologue
-    mov     rdi, fmtstr     ; first argument for printf
+    mov     rdi, fmtstr     ; first argument for printf 
     mov     rsi, msg        ; second argument for printf
     xor     rax, rax        ; no xmm registers
     call    printf          ; call the function
